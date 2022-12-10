@@ -18,7 +18,7 @@ def get_next_move_choice(possible_moves, captures, friendly_piece, friendly_king
         board_evaluations.append(minimax(max_depth, board, captures, friendly_piece, friendly_piece, friendly_king, enemy_piece, enemy_king, new_loc))
     return np.argmax(board_evaluations)
 
-def minimax(depth, board, captures, player_turn, friendly_piece, friendly_king, enemy_piece, enemy_king, alpha=-float("inf"), beta=float("inf"), new_loc=None):
+def minimax(depth, board, captures, player_turn, friendly_piece, friendly_king, enemy_piece, enemy_king, maximizing_player=True, alpha=-float("inf"), beta=float("inf"), new_loc=None):
     if check_player_won(player_turn, board=board):
         return evaluate_board(board, friendly_piece, friendly_king, enemy_piece, enemy_king)
     if not captures:
@@ -36,20 +36,19 @@ def minimax(depth, board, captures, player_turn, friendly_piece, friendly_king, 
     if depth == 0:
         return evaluate_board(board, friendly_piece, friendly_king, enemy_piece, enemy_king)
 
-    if (player_turn == friendly_piece and captures) or (player_turn == enemy_piece and not captures):
+    if maximizing_player:
         bestVal = -float("inf")
         for b in possible_moves:
-            value = minimax(depth-1, b, captures, friendly_piece, friendly_piece, friendly_king, enemy_piece, enemy_king, alpha, beta, new_loc)
+            value = minimax(depth-1, b, captures, friendly_piece, friendly_piece, friendly_king, enemy_piece, enemy_king, False, alpha, beta, new_loc)
             bestVal = min(bestVal, value)
             beta = min(beta, bestVal)
             if beta <= alpha:
                 break
         return value
-
-    else: # it's either our turn and we don't capture, or enemy turn and they do
+    else:
         bestVal = float("inf")
         for b in possible_moves:
-            value = minimax(depth-1, b, captures, friendly_piece, friendly_piece, friendly_king, enemy_piece, enemy_king, alpha, beta, new_loc)
+            value = minimax(depth-1, b, captures, friendly_piece, friendly_piece, friendly_king, enemy_piece, enemy_king, True, alpha, beta, new_loc)
             bestVal = max(bestVal, value)
             alpha = min(alpha, bestVal)
             if beta <= alpha:
