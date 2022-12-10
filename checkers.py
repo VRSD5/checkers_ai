@@ -4,10 +4,22 @@ import numpy as np
 def evaluate_board(board, friendly_piece, friendly_king, enemy_piece, enemy_king):
     # We can simply say having more pieces is good, and the enemy having pieces is bad
     # We can make kings worth double the value of regular pieces as well
-    num_f_pieces = np.sum(board == friendly_piece)
-    num_f_kings = 2*np.sum(board == friendly_king)
-    num_e_pieces = -np.sum(board == enemy_piece)
-    num_e_kings = -2*np.sum(board == enemy_king)
+    
+    num_f_pieces = 0
+    num_e_pieces = 0
+    if friendly_piece == 6:
+        for i in range(8):
+            num_f_pieces += np.sum(board[i] == friendly_piece) * (13-i)
+            num_e_pieces += np.sum(board[i] == enemy_piece) * -(6+i)
+
+    else:
+        for i in range(8):
+            num_f_pieces += np.sum(board[i] == friendly_piece) * (6+i)
+            num_e_pieces += np.sum(board[i] == enemy_piece) * -(13-i)
+            
+
+    num_f_kings = np.sum(board[i] == friendly_king) * (15)
+    num_e_kings = np.sum(board[i] == enemy_king) * (-15)
 
     return sum([num_f_pieces, num_f_kings, num_e_pieces, num_e_kings])
 
