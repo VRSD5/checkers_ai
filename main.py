@@ -6,11 +6,11 @@ import numpy as np
 import game 
 
 # Random choice
-from ai1 import get_next_move_choice as get_next_move_choice1 # light / red
+from ei import get_next_move_choice as get_next_move_choice1 # light / red
 # Evaluating one move ahead
 #from ai2 import get_next_move_choice as get_next_move_choice2 # dark / green
 # Minimax 3 moves ahead
-from checkers import get_next_move_choice as get_next_move_choice2 # dark / green
+from ai1 import get_next_move_choice as get_next_move_choice2 # dark / green
 
 dark_piece_value = 4  # 100
 light_piece_value = 6

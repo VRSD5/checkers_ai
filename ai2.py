@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def evaluate_board(board, friendly_piece, friendly_king, enemy_piece, enemy_king):
     # We can simply say having more pieces is good, and the enemy having pieces is bad
     # We can make kings worth double the value of regular pieces as well
